@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Test OpenCV.js</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="vendor/css/bootstrap-4.5.0.min.css">
+<link rel="stylesheet" href="vendor/css/cover.css">
+</head>
+<body class="text-center">
+  <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+    <main>
+      <h2>Hello OpenCV.js</h2>
+      <p id="status">OpenCV.js is loading...</p>
+      <div>
+        <div class="inputoutput">
+          <img id="imageSrc" alt="No Image" />
+          <div class="caption">imageSrc <input type="file" id="fileInput" name="file" /></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+<script src="vendor/js/jquery-3.5.1.min.js"></script>
+<script src="vendor/js/popper-1.16.0.min.js"></script>
+<script src="vendor/js/bootstrap-4.5.0.min.js"></script>
+
+<script type="text/javascript">
+let imgElement = document.getElementById("imageSrc")
+
+let inputElement = document.getElementById("fileInput");
+inputElement.addEventListener("change", (e) => {
+  imgElement.src = URL.createObjectURL(e.target.files[0]);
+}, false);
+
+function onOpenCvReady() {
+  document.getElementById('status').innerHTML = 'OpenCV.js is ready.';
+}
+</script>
+<script async src="vendor/js/opencv-4.3.0.js" onload="onOpenCvReady();" type="text/javascript"></script>
+</body>
+</html>
