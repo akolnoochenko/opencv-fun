@@ -5,17 +5,20 @@
 <title>Test OpenCV.js</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="stylesheet" href="vendor/css/bootstrap-4.5.0.min.css">
-<link rel="stylesheet" href="vendor/css/cover.css">
 </head>
 <body class="text-center">
-  <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
-    <main>
-      <h2>Hello OpenCV.js</h2>
+  <div class="container">
+    <main role="main" class="inner">
+      <h1 >Hello OpenCV.js</h1>
       <p id="status">OpenCV.js is loading...</p>
-      <div>
-        <div class="inputoutput">
-          <img id="imageSrc" alt="No Image" />
+      <div class="row">
+        <div class="inputoutput col">
+          <img id="imageSrc" alt="No Image" width="50%" />
           <div class="caption">imageSrc <input type="file" id="fileInput" name="file" /></div>
+        </div>
+        <div class="inputoutput col">
+          <canvas id="canvasOutput" width="50%" ></canvas>
+          <div class="caption">canvasOutput</div>
         </div>
       </div>
     </main>
@@ -26,16 +29,22 @@
 <script src="vendor/js/bootstrap-4.5.0.min.js"></script>
 
 <script type="text/javascript">
-let imgElement = document.getElementById("imageSrc")
+  $(function () {
+    let imgElement = $('#imageSrc')[0];
+    let inputElement = $('#fileInput');
+    inputElement.change(function (e) {
+      imgElement.src = URL.createObjectURL(e.target.files[0]);
+    });
+    imgElement.onload = function() {
+      let mat = cv.imread(imgElement);
+      cv.imshow('canvasOutput', mat);
+      mat.delete();
+    };
+  })
 
-let inputElement = document.getElementById("fileInput");
-inputElement.addEventListener("change", (e) => {
-  imgElement.src = URL.createObjectURL(e.target.files[0]);
-}, false);
-
-function onOpenCvReady() {
-  document.getElementById('status').innerHTML = 'OpenCV.js is ready.';
-}
+  function onOpenCvReady() {
+    document.getElementById('status').innerHTML = 'OpenCV.js is ready.';
+  }
 </script>
 <script async src="vendor/js/opencv-4.3.0.js" onload="onOpenCvReady();" type="text/javascript"></script>
 </body>
